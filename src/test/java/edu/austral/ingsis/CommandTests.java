@@ -3,10 +3,9 @@ package edu.austral.ingsis;
 import static org.junit.jupiter.api.Assertions.*;
 
 import edu.austral.ingsis.clifford.*;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 public class CommandTests {
 
@@ -75,7 +74,9 @@ public class CommandTests {
 
   @Test
   public void testRemoveNonExistingFile() {
-    assertEquals("Error: File or directory not found", new Rm(fileSystem, "non-existing-file", false).execute());
+    assertEquals(
+        "Error: File or directory not found",
+        new Rm(fileSystem, "non-existing-file", false).execute());
   }
 
   @Test
@@ -84,8 +85,9 @@ public class CommandTests {
     Dir directory = new Dir("directory", root);
     fileSystem = new FileSystem(root);
 
-    assertEquals("cannot remove 'directory', is a directory",
-            new Rm(fileSystem, "directory", false).execute());
+    assertEquals(
+        "cannot remove 'directory', is a directory",
+        new Rm(fileSystem, "directory", false).execute());
   }
 
   @Test

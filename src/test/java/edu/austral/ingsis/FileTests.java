@@ -1,4 +1,3 @@
-
 package edu.austral.ingsis;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,4 +55,3 @@ public class FileTests {
     assertEquals(root.getChildren(), List.of(file, file1));
   }
 }
-

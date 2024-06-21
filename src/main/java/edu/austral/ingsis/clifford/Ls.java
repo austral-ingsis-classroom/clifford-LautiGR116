@@ -21,8 +21,7 @@ public class Ls implements Command {
 
     if (Objects.equals(ord, "desc")) {
       names.sort(Collections.reverseOrder());
-    }
-    else if (Objects.equals(ord, "asc")) {
+    } else if (Objects.equals(ord, "asc")) {
       Collections.sort(names);
     }
 
