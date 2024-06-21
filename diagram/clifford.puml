@@ -1,0 +1,116 @@
+@startuml
+
+interface Command {
+  + execute(): String
+}
+
+interface Node {
+  + getName(): String
+  + getParent(): Dir
+}
+
+class Cd {
+  - fileSystem: FileSystem
+  - path: String
+
+  + Cd(fileSystem: FileSystem, path: String)
+  + execute(): String
+  - navigateToDirectory(path: String): Dir
+  - findChildDirectory(directory: Dir, name: String): Dir
+  - getDirectoryPath(directory: Dir): String
+}
+
+class Dir {
+  - name: String
+  - children: List<Node>
+  - parent: Dir
+
+  + Dir(name: String, parent: Dir)
+  + Dir(name: String)
+  + getName(): String
+  + getParent(): Dir
+  + getChildren(): List<Node>
+  + addChild(node: Node): void
+  + removeChild(node: Node): void
+}
+
+class File {
+  - name: String
+  - parent: Dir
+
+  + File(name: String, parent: Dir)
+  + getName(): String
+  + getParent(): Dir
+}
+
+class FileSystem {
+  - root: Dir
+  - currentDirectory: Dir
+
+  + FileSystem()
+  + FileSystem(Dir root)
+  + getCurrentDirectory(): Dir
+  + setCurrentDirectory(directory: Dir): void
+  + getRoot(): Dir
+  + executeCommand(commandLine: String): String
+}
+
+class Ls {
+  - fileSystem: FileSystem
+  - ord: String
+
+  + Ls(fileSystem: FileSystem, ord: String)
+  + execute(): String
+}
+
+class Mkdir {
+  - fileSystem: FileSystem
+  - name: String
+
+  + Mkdir(fileSystem: FileSystem, name: String)
+  + execute(): String
+}
+
+class Pwd {
+  - fileSystem: FileSystem
+
+  + Pwd(fileSystem: FileSystem)
+  + execute(): String
+}
+
+class Rm {
+  - fileSystem: FileSystem
+  - name: String
+  - recursive: boolean
+
+  + Rm(fileSystem: FileSystem, name: String, recursive: boolean)
+  + execute(): String
+  - removeDirectoryRecursively(directory: Dir): void
+}
+
+class Touch {
+  - fileSystem: FileSystem
+  - name: String
+
+  + Touch(fileSystem: FileSystem, name: String)
+  + execute(): String
+}
+
+Node <|.. Dir
+Node <|.. File
+Command <|.. Cd
+Command <|.. Ls
+Command <|.. Mkdir
+Command <|.. Pwd
+Command <|.. Rm
+Command <|.. Touch
+
+FileSystem o-- Dir
+Cd --> FileSystem
+Ls --> FileSystem
+Mkdir --> FileSystem
+Pwd --> FileSystem
+Rm --> FileSystem
+Touch --> FileSystem
+
+@enduml
