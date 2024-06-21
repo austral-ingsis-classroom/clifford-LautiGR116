@@ -14,16 +14,16 @@ public class Cd implements Command {
   public String execute() {
     if (Objects.equals(path, "/")) {
       fileSystem.setCurrentDirectory(fileSystem.getRoot());
-      return "Moved to directory '/'";
+      return "moved to directory '/'";
     }
 
     Dir targetDirectory = navigateToDirectory(path);
 
     if (targetDirectory != null) {
       fileSystem.setCurrentDirectory(targetDirectory);
-      return "Moved to directory '" + getDirectoryPath(targetDirectory) + "'";
+      return "moved to directory '" + getDirectoryPath(targetDirectory) + "'";
     } else {
-      return "Directory '" + path + "' does not exist";
+      return "'" + path + "'" + " directory does not exist";
     }
   }
 
@@ -71,12 +71,6 @@ public class Cd implements Command {
     if (directory == fileSystem.getRoot()) {
       return "/";
     }
-
-    StringBuilder pathBuilder = new StringBuilder();
-    while (directory != null && directory != fileSystem.getRoot()) {
-      pathBuilder.insert(0, "/" + directory.getName());
-      directory = directory.getParent();
-    }
-    return pathBuilder.toString();
+    return directory.getName();
   }
 }
